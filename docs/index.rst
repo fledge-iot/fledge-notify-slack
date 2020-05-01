@@ -1,5 +1,5 @@
 .. Images
-.. |slack_1| image:: images/slack_1.jpg
+.. |slack_1| image:: images/slack_01.jpg
 .. |slack_2| image:: images/slack_2.jpg
 .. |slack_3| image:: images/slack_3.jpg
 
