@@ -39,7 +39,7 @@ To obtain a webhook URL from Slack
 
 Once you have created your notification rule and move on to the delivery mechanism 
 
-  - Select the Slack plugin from the list of plugins
+  - Select the slack plugin from the list of plugins
 
   - Click *Next*
 
