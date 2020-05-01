@@ -11,7 +11,7 @@
 Slack Messages
 ==============
 
-The *fledge-notify-slack* delivery notification plugin allows notifications to be delivered as instant messages on the Slack messaging platform. The plugin uses n Slack webhook to post the message.
+The *fledge-notify-slack* delivery notification plugin allows notifications to be delivered as instant messages on the Slack messaging platform. The plugin uses a Slack webhook to post the message.
 
 To obtain a webhook URL from Slack 
 
