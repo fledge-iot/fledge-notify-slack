@@ -12,7 +12,7 @@ class Slack {
 	public:
 		Slack(ConfigCategory *config);
 		~Slack();
-		void	notify(const std::string& notificationName, const std::string& triggerReason, const std::string& message);
+		bool	notify(const std::string& notificationName, const std::string& triggerReason, const std::string& message);
 		void	reconfigure(const std::string& newConfig);
 	private:
 		std::string	m_url;

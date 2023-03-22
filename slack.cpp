@@ -41,12 +41,12 @@ Slack::~Slack()
  * @param triggerReason		Why the notification is being sent
  * @param message		The message to send
  */
-void Slack::notify(const string& notificationName, const string& triggerReason, const string& message)
+bool Slack::notify(const string& notificationName, const string& triggerReason, const string& message)
 {
 ostringstream   payload;
 SimpleHttps	*https = NULL;
 
-
+Logger::getLogger()->error("Slack::notify(");
 	payload << "{ \"text\" : \"";
 	payload << "*" << notificationName << "*\\n\\n";
 	payload << message;
@@ -66,7 +66,7 @@ SimpleHttps	*https = NULL;
 	if (m_url.empty())
 	{
 		Logger::getLogger()->error("Slack webhook is not set");
-		return;
+		return false;
 	}
 
 	/**
@@ -106,6 +106,7 @@ SimpleHttps	*https = NULL;
 						   "to slack webhook  %s, errorCode %d",
 						   m_url.c_str(),
 						   errorCode);
+			return false;
 		}
 	}
 	catch (exception &e)
@@ -114,6 +115,7 @@ SimpleHttps	*https = NULL;
 					   "to slack webhook  %s: %s",
 					    m_url.c_str(),
 					    e.what());
+		return false;
 
 	}
 	catch (...)
@@ -125,12 +127,16 @@ SimpleHttps	*https = NULL;
 					   "to slack webhook  %s: %s",
 					    m_url.c_str(),
 					    name.c_str());
+
+		return false;
 	}
 
 	if (https)
 	{
 		delete https;
 	}
+
+	return true;
 }
 
 /**
