@@ -45,6 +45,7 @@ bool Slack::notify(const string& notificationName, const string& triggerReason, 
 {
 	ostringstream   payload;
 	SimpleHttps	*https = NULL;
+	bool retVal = true;
 
 	payload << "{ \"text\" : \"";
 	payload << "*" << notificationName << "*\\n\\n";
@@ -106,7 +107,7 @@ bool Slack::notify(const string& notificationName, const string& triggerReason, 
                                                    "to slack webhook  %s, resCode %d",
                                                    m_url.c_str(),
                                                    resCode);
-                        return false;
+                        retVal = false;
                 }
 	}
 	catch (exception &e)
@@ -115,7 +116,7 @@ bool Slack::notify(const string& notificationName, const string& triggerReason, 
 					   "to slack webhook  %s: %s",
 					    m_url.c_str(),
 					    e.what());
-		return false;
+		retVal = false;
 
 	}
 	catch (...)
@@ -128,7 +129,7 @@ bool Slack::notify(const string& notificationName, const string& triggerReason, 
 					    m_url.c_str(),
 					    name.c_str());
 
-		return false;
+		retVal = false;
 	}
 
 	if (https)
@@ -136,7 +137,7 @@ bool Slack::notify(const string& notificationName, const string& triggerReason, 
 		delete https;
 	}
 
-	return true;
+	return retVal;
 }
 
 /**
