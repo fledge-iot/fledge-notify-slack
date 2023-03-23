@@ -99,8 +99,8 @@ bool Slack::notify(const string& notificationName, const string& triggerReason, 
                                                     headers,
                                                     payload.str());
 
-                std::string strStatusCode = to_string(resCode);
-                if(strStatusCode[0] != '2')
+                std::string strResCode = to_string(resCode);
+                if(strResCode[0] != '2')
                 {
                         Logger::getLogger()->error("Failed to send notification "
                                                    "to slack webhook  %s, resCode %d",
