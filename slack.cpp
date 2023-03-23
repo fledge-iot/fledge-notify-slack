@@ -43,10 +43,9 @@ Slack::~Slack()
  */
 bool Slack::notify(const string& notificationName, const string& triggerReason, const string& message)
 {
-ostringstream   payload;
-SimpleHttps	*https = NULL;
+	ostringstream   payload;
+	SimpleHttps	*https = NULL;
 
-Logger::getLogger()->error("Slack::notify(");
 	payload << "{ \"text\" : \"";
 	payload << "*" << notificationName << "*\\n\\n";
 	payload << message;
@@ -95,19 +94,20 @@ Logger::getLogger()->error("Slack::notify(");
 			https  = new SimpleHttps(hostAndPort);
 		}
 
-		int errorCode;
-		if ((errorCode = https->sendRequest("POST",
-						    m_url,
-						    headers,
-						    payload.str())) != 200 &&
-		    errorCode == 202)
-		{
-			Logger::getLogger()->error("Failed to send notification "
-						   "to slack webhook  %s, errorCode %d",
-						   m_url.c_str(),
-						   errorCode);
-			return false;
-		}
+		int errorCode = https->sendRequest("POST",
+                                                    m_url,
+                                                    headers,
+                                                    payload.str());
+
+                std::string stri = to_string(errorCode);
+                if(stri[0] != '2')
+                {
+                        Logger::getLogger()->error("Failed to send notification "
+                                                   "to slack webhook  %s, errorCode %d",
+                                                   m_url.c_str(),
+                                                   errorCode);
+                        return false;
+                }
 	}
 	catch (exception &e)
 	{
