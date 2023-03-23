@@ -94,18 +94,18 @@ bool Slack::notify(const string& notificationName, const string& triggerReason, 
 			https  = new SimpleHttps(hostAndPort);
 		}
 
-		int errorCode = https->sendRequest("POST",
+		int resCode = https->sendRequest("POST",
                                                     m_url,
                                                     headers,
                                                     payload.str());
 
-                std::string stri = to_string(errorCode);
-                if(stri[0] != '2')
+                std::string strStatusCode = to_string(resCode);
+                if(strStatusCode[0] != '2')
                 {
                         Logger::getLogger()->error("Failed to send notification "
-                                                   "to slack webhook  %s, errorCode %d",
+                                                   "to slack webhook  %s, resCode %d",
                                                    m_url.c_str(),
-                                                   errorCode);
+                                                   resCode);
                         return false;
                 }
 	}
