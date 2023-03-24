@@ -40,6 +40,7 @@ Slack::~Slack()
  * @param notificationName 	The name of this notification
  * @param triggerReason		Why the notification is being sent
  * @param message		The message to send
+ * @return bool			whether notify succeded or not
  */
 bool Slack::notify(const string& notificationName, const string& triggerReason, const string& message)
 {
