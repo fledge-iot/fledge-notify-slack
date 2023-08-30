@@ -26,9 +26,9 @@
 				"\"displayName\" : \"Enabled\", " \
 				"\"default\": \"false\" }, " \
 			"\"webhook\" : {\"description\" : \"Slack WebHook URL\", " \
-				"\"type\" : \"string\", " \
+				"\"type\" : \"URL\", " \
 				"\"default\" : \"https://hooks.slack.com/services/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\", " \
-				"\"order\" : \"1\", \"displayName\" : \"Slack Webhook URL\"}, " \
+				"\"order\" : \"1\", \"displayName\" : \"Slack Webhook URL\", \"mandatory\" : \"true\" }, " \
 			"\"text\" : {\"description\" : \"Static message text\", " \
 				"\"type\" : \"string\", " \
 				"\"default\" : \"\", " \

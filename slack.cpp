@@ -25,6 +25,7 @@ Slack::Slack(ConfigCategory *category)
 {
 	m_url = category->getValue("webhook");
 	m_text = category->getValue("text");
+	verifyURLFormat();
 }
 
 /**
@@ -44,6 +45,12 @@ Slack::~Slack()
  */
 bool Slack::notify(const string& notificationName, const string& triggerReason, const string& message)
 {
+	if (m_url.empty())
+	{
+		Logger::getLogger()->error("Slack webhook is not set");
+		return false;
+	}
+
 	ostringstream   payload;
 	SimpleHttps	*https = NULL;
 	bool retVal = true;
@@ -63,12 +70,6 @@ bool Slack::notify(const string& notificationName, const string& triggerReason, 
 	std::vector<std::pair<std::string, std::string>> headers;
 	pair<string, string> header = make_pair("Content-type", "application/json");
 	headers.push_back(header);
-
-	if (m_url.empty())
-	{
-		Logger::getLogger()->error("Slack webhook is not set");
-		return false;
-	}
 
 	/**
 	 * Extract host and port from URL
@@ -151,4 +152,20 @@ void Slack::reconfigure(const string& newConfig)
 	ConfigCategory category("new", newConfig);
 	m_url = category.getValue("webhook");
 	m_text = category.getValue("text");
+	verifyURLFormat();
+}
+
+/**
+ * Verify Slack webhook has valid URL format
+ *
+ */
+void Slack::verifyURLFormat()
+{
+	string slackURLformat =  "https://hooks.slack.com/services/";
+
+	if (m_url.substr(0,33) != slackURLformat)
+	{
+		m_url.clear();
+		Logger::getLogger()->error("Slack webhook URL format is not valid.");
+	}
 }

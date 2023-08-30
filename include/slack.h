@@ -15,6 +15,7 @@ class Slack {
 		bool	notify(const std::string& notificationName, const std::string& triggerReason, const std::string& message);
 		void	reconfigure(const std::string& newConfig);
 	private:
+		void	verifyURLFormat();
 		std::string	m_url;
 		std::string	m_text;
 };
