@@ -168,7 +168,7 @@ void Slack::verifyURLFormat()
 	}
 
 	// Verify Slack webhook format
-	string slackURLformat =  "https://hooks.slack.com/services/";
+	string slackURLformat =  "https://hooks.slack.com/";
 
 	if (m_url.rfind(slackURLformat,0) == string::npos)
 	{
