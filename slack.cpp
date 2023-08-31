@@ -47,7 +47,7 @@ bool Slack::notify(const string& notificationName, const string& triggerReason, 
 {
 	if (m_url.empty())
 	{
-		Logger::getLogger()->error("Slack webhook is not set");
+		Logger::getLogger()->error("Slack webhook URL is not valid.");
 		return false;
 	}
 
@@ -161,11 +161,18 @@ void Slack::reconfigure(const string& newConfig)
  */
 void Slack::verifyURLFormat()
 {
+	if (m_url.empty())
+	{
+		Logger::getLogger()->error("Slack webhook is not set.");
+		return;
+	}
+
+	// Verify Slack webhook format
 	string slackURLformat =  "https://hooks.slack.com/services/";
 
-	if (m_url.substr(0,33) != slackURLformat)
+	if (m_url.rfind(slackURLformat,0) == string::npos)
 	{
 		m_url.clear();
-		Logger::getLogger()->error("Slack webhook URL format is not valid.");
+		Logger::getLogger()->error("Slack webhook URL is not valid.");
 	}
 }
