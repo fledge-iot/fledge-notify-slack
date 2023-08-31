@@ -25,7 +25,6 @@ Slack::Slack(ConfigCategory *category)
 {
 	m_url = category->getValue("webhook");
 	m_text = category->getValue("text");
-	verifyURLFormat();
 }
 
 /**
@@ -152,27 +151,4 @@ void Slack::reconfigure(const string& newConfig)
 	ConfigCategory category("new", newConfig);
 	m_url = category.getValue("webhook");
 	m_text = category.getValue("text");
-	verifyURLFormat();
-}
-
-/**
- * Verify Slack webhook has valid URL format
- *
- */
-void Slack::verifyURLFormat()
-{
-	if (m_url.empty())
-	{
-		Logger::getLogger()->error("Slack webhook is not set.");
-		return;
-	}
-
-	// Verify Slack webhook format
-	string slackURLformat =  "https://hooks.slack.com";
-
-	if (m_url.rfind(slackURLformat,0) == string::npos)
-	{
-		m_url.clear();
-		Logger::getLogger()->error("Slack webhook URL is not valid.");
-	}
 }
