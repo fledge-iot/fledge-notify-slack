@@ -44,6 +44,12 @@ Slack::~Slack()
  */
 bool Slack::notify(const string& notificationName, const string& triggerReason, const string& message)
 {
+	if (m_url.empty())
+	{
+		Logger::getLogger()->error("Slack webhook URL is not valid.");
+		return false;
+	}
+
 	ostringstream   payload;
 	SimpleHttps	*https = NULL;
 	bool retVal = true;
@@ -63,12 +69,6 @@ bool Slack::notify(const string& notificationName, const string& triggerReason, 
 	std::vector<std::pair<std::string, std::string>> headers;
 	pair<string, string> header = make_pair("Content-type", "application/json");
 	headers.push_back(header);
-
-	if (m_url.empty())
-	{
-		Logger::getLogger()->error("Slack webhook is not set");
-		return false;
-	}
 
 	/**
 	 * Extract host and port from URL
