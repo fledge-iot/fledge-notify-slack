@@ -26,9 +26,9 @@
 				"\"displayName\" : \"Enabled\", " \
 				"\"default\": \"false\" }, " \
 			"\"webhook\" : {\"description\" : \"Slack WebHook URL\", " \
-				"\"type\" : \"string\", " \
+				"\"type\" : \"URL\", " \
 				"\"default\" : \"https://hooks.slack.com/services/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\", " \
-				"\"order\" : \"1\", \"displayName\" : \"Slack Webhook URL\"}, " \
+				"\"order\" : \"1\", \"displayName\" : \"Slack Webhook URL\", \"mandatory\" : \"true\" }, " \
 			"\"text\" : {\"description\" : \"Static message text\", " \
 				"\"type\" : \"string\", " \
 				"\"default\" : \"\", " \
@@ -95,8 +95,7 @@ bool plugin_deliver(PLUGIN_HANDLE handle,
 	Logger::getLogger()->info("Slack notification plugin_deliver(): deliveryName=%s, notificationName=%s, triggerReason=%s, message=%s",
 							deliveryName.c_str(), notificationName.c_str(), triggerReason.c_str(), message.c_str());
 	Slack *slack = (Slack *)handle;
-	slack->notify(notificationName, triggerReason, message);
-	return true;
+	return slack->notify(notificationName, triggerReason, message);
 }
 
 /**
