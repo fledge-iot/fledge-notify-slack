@@ -61,7 +61,7 @@ bool Slack::notify(const string& notificationName, const string& triggerReason, 
 	doc.Parse(triggerReason.c_str());
 	if (!doc.HasParseError() && doc.HasMember("reason"))
 	{
-		payload << "Notification has " << doc["reason"].GetString() << "\\n";
+		payload << "\\nNotification has " << doc["reason"].GetString() << "\\n";
 	}
 	payload << m_text << "\\n\\n";
 	payload << "\" }";
